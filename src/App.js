@@ -5,7 +5,8 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/database');
 const authRouter = require('./routes/auth');
 const authMiddleware = require('./middleware/auth'); // Our JWT filter from 5.1
-
+const recordsRouter = require('./routes/records');
+const errorHandler = require('./middleware/errorHandler');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -19,9 +20,9 @@ app.use(express.json());            // Parse JSON request bodies
 
 // Health check route — verify server is running
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString() 
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -67,6 +68,8 @@ app.get('/api/test-auth', authMiddleware, (req, res) => {
   });
 });
 
+// Protected routes (auth required)
+app.use('/api/records', authMiddleware, recordsRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
@@ -76,11 +79,15 @@ const PORT = process.env.PORT || 3000;
 // });
 
 
+// Error handler MUST be registered LAST
+// It catches errors from ALL routes above it
+app.use(errorHandler);
+
 
 const startServer = async () => {
   // Step 1: Connect to MongoDB (waits until connection succeeds or crashes)
   await connectDB();
-  
+
   // Step 2: ONLY after DB is ready, start accepting HTTP requests
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
