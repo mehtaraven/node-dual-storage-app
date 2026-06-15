@@ -1,0 +1,7 @@
+{
+  "screenName": "minimal",
+  "components": [
+    { "type": "input", "name": "name", "label": "Name" },
+    { "type": "button", "label": "Go" }
+  ]
+}

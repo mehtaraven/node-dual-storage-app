@@ -1,18 +1,21 @@
 const StorageFactory = require('../storage/storageFactory');
+const { v4: uuidv4 } = require('uuid');
 
 class RecordsService {
 
-  validateFields(data) {
+  validateFields(data, storageType) {
     const errors = [];
 
-    // name is REQUIRED — this becomes the record identifier and filename
-    if (!data.name || typeof data.name !== 'string' || data.name.trim() === '') {
-      errors.push('name is required and must be a non-empty string');
-    } else if (data.name.length > 50) {
-      errors.push('name must be at most 50 characters');
-    } else if (!/^[a-zA-Z0-9-_ ]+$/.test(data.name)) {
-      // Only allow safe characters for filename
-      errors.push('name can only contain letters, numbers, spaces, hyphens, and underscores');
+
+    // name is only required for file storage (it becomes the filename)
+    if (storageType === 'file') {
+      if (!data.name || typeof data.name !== 'string' || data.name.trim() === '') {
+        errors.push('name is required for file storage');
+      } else if (data.name.length > 50) {
+        errors.push('name must be at most 50 characters');
+      } else if (!/^[a-zA-Z0-9-_ ]+$/.test(data.name)) {
+        errors.push('name can only contain letters, numbers, spaces, hyphens, and underscores');
+      }
     }
 
     if (!data.firstName || typeof data.firstName !== 'string' || data.firstName.trim() === '') {
@@ -28,7 +31,7 @@ class RecordsService {
     }
 
     // phone is OPTIONAL — validate only if provided
-    if (data.phone !== undefined && data.phone !== '') {
+    if (data.phone !== undefined && data.phone !== '' && data.phone !== null) {
       if (typeof data.phone !== 'string') {
         errors.push('phone must be a string');
       } else if (data.phone.length > 20) {
@@ -42,22 +45,33 @@ class RecordsService {
   async createRecord(userEmail, storageType, data) {
     const handler = StorageFactory.createHandler(storageType);
 
-    // Use the name as the record ID (sanitized for safe filenames)
-    const recordId = data.name.trim().toLowerCase().replace(/\s+/g, '-');
+    // Generate record ID based on storage type:
+    // File storage: use sanitized name as ID (becomes filename)
+    // MongoDB: generate a UUID (name field not required)
+    let recordId;
+    if (storageType === 'file') {
+      recordId = data.name.trim().toLowerCase().replace(/\s+/g, '-');
 
-    // Check if record with this name already exists
-    const existing = await handler.read(userEmail, recordId);
-    if (existing) {
-      return { error: `Record "${data.name}" already exists`, status: 409 };
+      // Check if record with this name already exists
+      const existing = await handler.read(userEmail, recordId);
+      if (existing) {
+        return { error: `Record "${data.name}" already exists`, status: 409 };
+      }
+    } else {
+      recordId = uuidv4();
     }
 
     const recordData = {
       id: recordId,                          // This becomes the filename: {id}.json
-      name: data.name.trim(),                // Original name as entered by user
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
       phone: data.phone ? data.phone.trim() : null  // Optional field
     };
+
+    // Only include name for file storage
+    if (storageType === 'file') {
+      recordData.name = data.name.trim();
+    }
 
     const result = await handler.create(userEmail, recordData);
     return { data: result.data, status: 201 };
@@ -84,11 +98,14 @@ class RecordsService {
     const handler = StorageFactory.createHandler(storageType);
 
     const updateData = {
-      name: data.name ? data.name.trim() : undefined,
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
       phone: data.phone ? data.phone.trim() : null
     };
+    // Include name only for file storage
+    if (storageType === 'file' && data.name) {
+      updateData.name = data.name.trim();
+    }
 
     const result = await handler.update(userEmail, id, updateData);
 

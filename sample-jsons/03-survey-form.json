@@ -1,0 +1,13 @@
+{
+  "screenName": "customer-survey",
+  "components": [
+    { "type": "input", "name": "name", "label": "Your Name", "placeholder": "Optional" },
+    { "type": "select", "name": "rating", "label": "How would you rate our service?", "options": ["Excellent", "Good", "Average", "Poor", "Terrible"], "required": true },
+    { "type": "select", "name": "recommendLikelihood", "label": "Would you recommend us?", "options": ["Definitely", "Probably", "Not sure", "Probably not", "Never"] },
+    { "type": "textarea", "name": "whatWeDidWell", "label": "What did we do well?", "rows": 3, "placeholder": "Tell us what you liked..." },
+    { "type": "textarea", "name": "whatToImprove", "label": "What can we improve?", "rows": 3, "placeholder": "Your suggestions..." },
+    { "type": "checkbox", "name": "anonymous", "label": "Submit anonymously" },
+    { "type": "checkbox", "name": "followUp", "label": "I'm okay with a follow-up call" },
+    { "type": "button", "label": "Submit Survey" }
+  ]
+}

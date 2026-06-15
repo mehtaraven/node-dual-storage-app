@@ -1,0 +1,18 @@
+{
+  "screenName": "all-component-types-demo",
+  "components": [
+    { "type": "input", "name": "textField", "label": "Text Input (default)", "placeholder": "Regular text" },
+    { "type": "input", "name": "emailField", "label": "Email Input", "inputType": "email", "required": true, "placeholder": "email@example.com" },
+    { "type": "input", "name": "passwordField", "label": "Password Input", "inputType": "password", "required": true },
+    { "type": "input", "name": "phoneField", "label": "Phone Input", "inputType": "tel", "placeholder": "+1 555-0123" },
+    { "type": "input", "name": "numberField", "label": "Number Input", "inputType": "number" },
+    { "type": "textarea", "name": "shortText", "label": "Textarea (3 rows)", "rows": 3, "placeholder": "Short text area" },
+    { "type": "textarea", "name": "longText", "label": "Textarea (8 rows)", "rows": 8, "placeholder": "Large text area for detailed content" },
+    { "type": "checkbox", "name": "check1", "label": "Checkbox Option A" },
+    { "type": "checkbox", "name": "check2", "label": "Checkbox Option B" },
+    { "type": "checkbox", "name": "check3", "label": "Checkbox Option C (independent — all can be checked)" },
+    { "type": "select", "name": "singleSelect", "label": "Dropdown (single select)", "options": ["Option 1", "Option 2", "Option 3", "Option 4"], "required": true },
+    { "type": "select", "name": "colorSelect", "label": "Another Dropdown", "options": ["Red", "Blue", "Green", "Yellow", "Purple"] },
+    { "type": "button", "label": "Submit All Fields" }
+  ]
+}

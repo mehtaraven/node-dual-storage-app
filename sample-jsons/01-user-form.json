@@ -1,0 +1,12 @@
+{
+  "screenName": "user-registration",
+  "components": [
+    { "type": "input", "name": "firstName", "label": "First Name", "required": true, "placeholder": "Enter first name" },
+    { "type": "input", "name": "lastName", "label": "Last Name", "required": true },
+    { "type": "input", "name": "email", "label": "Email Address", "inputType": "email", "required": true, "placeholder": "user@example.com" },
+    { "type": "input", "name": "phone", "label": "Phone Number", "inputType": "tel", "placeholder": "+1 (555) 000-0000" },
+    { "type": "select", "name": "role", "label": "Role", "options": ["user", "admin", "moderator"], "required": true },
+    { "type": "checkbox", "name": "terms", "label": "I agree to the Terms of Service" },
+    { "type": "button", "label": "Register" }
+  ]
+}

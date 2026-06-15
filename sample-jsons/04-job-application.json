@@ -1,0 +1,17 @@
+{
+  "screenName": "job-application",
+  "components": [
+    { "type": "input", "name": "fullName", "label": "Full Name", "required": true },
+    { "type": "input", "name": "email", "label": "Email", "inputType": "email", "required": true },
+    { "type": "input", "name": "phone", "label": "Phone", "inputType": "tel" },
+    { "type": "input", "name": "linkedin", "label": "LinkedIn Profile URL", "placeholder": "https://linkedin.com/in/..." },
+    { "type": "select", "name": "position", "label": "Position Applied For", "options": ["Frontend Developer", "Backend Developer", "Full Stack Developer", "DevOps Engineer", "Product Manager"], "required": true },
+    { "type": "select", "name": "experience", "label": "Years of Experience", "options": ["0-1 years", "2-3 years", "4-6 years", "7-10 years", "10+ years"], "required": true },
+    { "type": "select", "name": "startDate", "label": "Earliest Start Date", "options": ["Immediately", "2 weeks", "1 month", "2 months", "3+ months"] },
+    { "type": "textarea", "name": "coverLetter", "label": "Cover Letter / Why This Role?", "rows": 8, "placeholder": "Tell us why you're a great fit..." },
+    { "type": "checkbox", "name": "remote", "label": "I prefer remote work" },
+    { "type": "checkbox", "name": "relocate", "label": "I'm willing to relocate" },
+    { "type": "checkbox", "name": "dataConsent", "label": "I consent to my data being stored for recruitment purposes", "required": true },
+    { "type": "button", "label": "Submit Application" }
+  ]
+}

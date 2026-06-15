@@ -1,0 +1,13 @@
+{
+  "screenName": "contact-us",
+  "components": [
+    { "type": "input", "name": "name", "label": "Full Name", "required": true },
+    { "type": "input", "name": "email", "label": "Email", "inputType": "email", "required": true },
+    { "type": "input", "name": "subject", "label": "Subject", "placeholder": "What's this about?" },
+    { "type": "select", "name": "department", "label": "Department", "options": ["Sales", "Support", "Billing", "Technical", "Other"] },
+    { "type": "textarea", "name": "message", "label": "Message", "required": true, "rows": 6, "placeholder": "Type your message here..." },
+    { "type": "checkbox", "name": "urgent", "label": "Mark as urgent" },
+    { "type": "checkbox", "name": "newsletter", "label": "Subscribe to our newsletter" },
+    { "type": "button", "label": "Send Message" }
+  ]
+}

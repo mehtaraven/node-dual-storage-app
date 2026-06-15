@@ -54,9 +54,7 @@ class FileStorage {
     }
   }
 
-  // ═══════════════════════════════════════════════════════════════════════
   // CREATE — Write a new record as a JSON file
-  // ═══════════════════════════════════════════════════════════════════════
   async create(userEmail, data) {
     const folderPath = this.getUserFolderPath(userEmail);
     await this.ensureFolder(folderPath);
@@ -66,13 +64,14 @@ class FileStorage {
     // Write the record object as pretty-printed JSON to disk
     // JSON.stringify(data, null, 2) → human-readable with 2-space indent
     await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
-
+    //   The 3 arguments:
+    //     updatedData → the object to convert
+    //     null        → no filter (include all fields)
+    //     2           → indent with 2 spaces (makes it readable when you open the file)
     return { status: 'SUCCESS', data };
   }
 
-  // ═══════════════════════════════════════════════════════════════════════
   // READ — Read a single record by ID
-  // ═══════════════════════════════════════════════════════════════════════
   // Returns null if not found (caller sends 404)
   async read(userEmail, id) {
     const filePath = this.getFilePath(userEmail, id);
@@ -90,9 +89,7 @@ class FileStorage {
     }
   }
 
-  // ═══════════════════════════════════════════════════════════════════════
   // READ ALL — Read all records for a user
-  // ═══════════════════════════════════════════════════════════════════════
   // Returns empty array if user has no records yet
   async readAll(userEmail) {
     const folderPath = this.getUserFolderPath(userEmail);
@@ -118,9 +115,7 @@ class FileStorage {
     }
   }
 
-  // ═══════════════════════════════════════════════════════════════════════
   // UPDATE — Overwrite an existing record
-  // ═══════════════════════════════════════════════════════════════════════
   // Returns null if record doesn't exist (can't update what's not there)
   async update(userEmail, id, data) {
     const filePath = this.getFilePath(userEmail, id);
@@ -130,7 +125,10 @@ class FileStorage {
       await fs.access(filePath);
 
       // Merge new data with the existing id (ensure id is always preserved)
+      console.log("FIle path >id ", id);
+      console.log("FIle path >...data ", { ...data });
       const updatedData = { ...data, id };
+      console.log("FIle path >updatedData ", updatedData);
       await fs.writeFile(filePath, JSON.stringify(updatedData, null, 2), 'utf-8');
 
       return { status: 'SUCCESS', data: updatedData };
@@ -142,9 +140,7 @@ class FileStorage {
     }
   }
 
-  // ═══════════════════════════════════════════════════════════════════════
   // DELETE — Remove a record file
-  // ═══════════════════════════════════════════════════════════════════════
   // Returns null if file doesn't exist (caller sends 404)
   async delete(userEmail, id) {
     const filePath = this.getFilePath(userEmail, id);

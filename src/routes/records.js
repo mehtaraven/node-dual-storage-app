@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   try {
     const { email, storage_type } = req.user;
 
-    const validationError = recordsService.validateFields(req.body);
+    const validationError = recordsService.validateFields(req.body, req.user.storage_type);
     if (validationError) {
       return res.status(400).json({ error: validationError });
     }
