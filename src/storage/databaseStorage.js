@@ -33,7 +33,9 @@ class DatabaseStorage {
         userEmail: userEmail.toLowerCase(),   // Owner — used for data isolation in ALL queries
         firstName: data.firstName,
         lastName: data.lastName,
-        phone: data.phone || null
+        phone: data.phone || null,
+        type: data.type || 'record',         // Dynamic form type (e.g., "vehicle", "user")
+        data: data.data || null              // Full dynamic form payload (flexible Mixed field)
       });
 
       // Return only the fields the API consumer needs (hide MongoDB internals like _id, __v)

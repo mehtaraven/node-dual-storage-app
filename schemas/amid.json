@@ -1,0 +1,41 @@
+{
+  "screenName": "amid",
+  "components": [
+    {
+      "type": "input",
+      "name": "firstName",
+      "label": "First Name",
+      "required": true
+    },
+    {
+      "type": "input",
+      "name": "lastName",
+      "label": "Last Name",
+      "required": true
+    },
+    {
+      "type": "input",
+      "name": "email",
+      "label": "Email",
+      "inputType": "email"
+    },
+    {
+      "type": "checkbox",
+      "name": "active",
+      "label": "Active User"
+    },
+    {
+      "type": "select",
+      "name": "role",
+      "label": "Role",
+      "options": [
+        "user",
+        "admin"
+      ]
+    },
+    {
+      "type": "button",
+      "label": "Create"
+    }
+  ]
+}

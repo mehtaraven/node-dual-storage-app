@@ -1,0 +1,11 @@
+{
+  "screenName": "user",
+  "components": [
+    {
+      "type": "input",
+      "name": "ddfirstName",
+      "label": "ddFirst Name",
+      "required": true
+    }
+  ]
+}

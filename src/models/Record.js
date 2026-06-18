@@ -1,18 +1,12 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// RECORD SCHEMA — A user can have MULTIPLE records (unlike Profile which is 1:1)
-// ─────────────────────────────────────────────────────────────────────────────
-
 const mongoose = require('mongoose');
 
 const recordSchema = new mongoose.Schema({
 
-  // a user can have many Records, each with a unique recordId.
   recordId: {
     type: String,
     required: true
   },
 
-  // userEmail: Owner of this record. Used in EVERY query for data isolation.
   userEmail: {
     type: String,
     required: true,
@@ -28,12 +22,35 @@ const recordSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  phone: { type: String, default: null }
+  phone: {
+    type: String,
+    default: null
+  },
 
+  // "type" tells us which schema this record belongs to.
+  // Default "record" = the original Add Record form.
+  // Dynamic forms set this to their screenName (e.g., "vehicle", "employee")
+  type: { type: String, default: 'record' },
+
+  // "data" is a flexible object — stores whatever fields the dynamic form collected.
+  // For type="record", this is empty (we use firstName/lastName/phone directly).
+  // For type="vehicle", this might be: { make: "Toyota", model: "Camry", year: "2024" }
+  // mongoose.Schema.Types.Mixed = accepts any shape (no strict schema for this field)
+  data: { type: mongoose.Schema.Types.Mixed, default: null }
 }, {
-  timestamps: true    // Auto-adds createdAt + updatedAt (like @EnableMongoAuditing)
+  timestamps: true    // Auto-adds createdAt + updatedAt
 });
 
+
+recordSchema.index({ recordId: 1, userEmail: 1 }, { unique: true });
+
+const Record = mongoose.model('Record', recordSchema); // Compile schema into a Model (the "repository" with all CRUD methods built in)
+
+module.exports = Record;
+
+
+
+// NOTEs
 // WHY compound (two fields) vs single field:
 //   - recordId ALONE is not unique globally — two different users could both
 //     have a record with id "rec-001".
@@ -49,9 +66,14 @@ const recordSchema = new mongoose.Schema({
 // In Spring Data MongoDB, compound indexes are created via @CompoundIndex annotation
 // on the entity class, or programmatically with MongoTemplate.indexOps().
 // ─────────────────────────────────────────────────────────────────────────────
-recordSchema.index({ recordId: 1, userEmail: 1 }, { unique: true });
 
-// Compile schema into a Model (the "repository" with all CRUD methods built in)
-const Record = mongoose.model('Record', recordSchema);
 
-module.exports = Record;
+// need to look  // files   //js  functions look into
+
+
+// dynamic >> type vehicle == screen name
+//>> publish >> saving acc to screen name >> render acc to endpoint == file name
+// CSS work  
+
+// 25 L  + 18 L = 43 L >>  69 L   JUNE 2030  1.25 CR >> in the end 70 L stay and 
+// car  boyght for 38 L  ( interest paid to bank ) >> 1cr 5 L  ? 1cr 22 L

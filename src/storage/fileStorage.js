@@ -126,6 +126,7 @@ class FileStorage {
 
       // Merge new data with the existing id (ensure id is always preserved)
       console.log("FIle path >id ", id);
+      console.log("FIle path >id ", id);
       console.log("FIle path >...data ", { ...data });
       const updatedData = { ...data, id };
       console.log("FIle path >updatedData ", updatedData);
@@ -158,3 +159,19 @@ class FileStorage {
 }
 
 module.exports = FileStorage;
+
+
+
+
+// H P SIGNA
+
+// SIGNATure   H + P + SKEY >> 1234567890
+
+// abc.def.ghj
+
+
+// backend >> new Signature > H + P + SKEY >> 
+
+//check if jwt is neeeded needed 
+// need to look  // files   //js  functions look into
+

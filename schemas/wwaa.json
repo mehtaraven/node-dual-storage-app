@@ -1,0 +1,15 @@
+{
+  "screenName": "wwaa",
+  "components": [
+    {
+      "type": "input",
+      "name": "firstName",
+      "label": "First Name",
+      "required": true
+    },
+    {
+      "type": "button",
+      "label": "Create"
+    }
+  ]
+}

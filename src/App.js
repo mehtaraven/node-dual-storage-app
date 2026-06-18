@@ -7,6 +7,9 @@ const authRouter = require('./routes/auth');
 const authMiddleware = require('./middleware/auth'); // Our JWT filter from 5.1
 const recordsRouter = require('./routes/records');
 const errorHandler = require('./middleware/errorHandler');
+const schemasRouter = require('./routes/schemas');
+const dynamicRouter = require('./routes/dynamic');
+
 
 // Load environment variables from .env file
 dotenv.config();
@@ -71,6 +74,12 @@ app.get('/api/test-auth', authMiddleware, (req, res) => {
 // Protected routes (auth required)
 app.use('/api/records', authMiddleware, recordsRouter);
 
+// Schema routes (protected — need auth, ideally admin-only for POST)
+app.use('/api/schemas', authMiddleware, schemasRouter);
+
+// Dynamic form submission routes (protected — any authenticated user)
+app.use('/api/dynamic', authMiddleware, dynamicRouter);
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 // app.listen(PORT, () => {
@@ -99,3 +108,7 @@ const startServer = async () => {
 startServer();
 
 module.exports = app;
+
+
+//inbuilt node modules >> 
+// node js offical doc 
